@@ -9,6 +9,7 @@
     $ git tag | tail -10
     $ git checkout v1.1
     $ go clean -cache
+    $ sed -i -E '/^func value\(/!{s/([^a-zA-Z0-9_])value\(([^)]*)\)/\1(value)(\2)/g}' diskwriter/diskwriter.go
     $ CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags='-s -w' -o galene-arm64
     $ scp galene-arm64 user@arm64_ip:/home/user/
 
