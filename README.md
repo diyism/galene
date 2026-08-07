@@ -1,3 +1,17 @@
+    grok 对galene的推荐:
+    Galene（强烈推荐
+    特点：极致轻量高性能 SFU，资源占用极低（0.25 核心可支撑约 100 人讲座模式）。
+    优势：单二进制文件，部署极简单；延迟低、CPU 占用小；原生支持音视频、屏幕共享、文字聊天。
+
+    放到arm64的路由器或树莓派或rock64之类的单板机上作为服务器运行非常合适:
+    在一台有 Go 的 x86_64 电脑（或云服务器）上交叉编译:
+    git clone https://github.com/jech/galene.git
+    cd galene
+    CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags='-s -w' -o galene-arm64
+    scp galene-arm64 user@arm64_ip:/home/user/
+    ssh user@arm64_ip sudo install galene-arm64 /usr/bin/galene
+
+
 # The Galene videoconferencing system
 
 Galene is a fully-featured videoconferencing system that is easy to deploy
