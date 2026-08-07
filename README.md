@@ -16,7 +16,7 @@
     在arm64单板机内:
     $ sudo install galene-arm64 /usr/bin/galene
     $ mkdir groups
-    $ echo '{"users": {"gal":{"password":"gal", "permissions":"op"}}}' > groups/night-watch.json
+    $ echo '{"public": true, "users": {"user1":{"password":"user1", "permissions":"op"}, "user2":{"password":"user2", "permissions":"op"}}}' > groups/night-watch.json
     $ galene &
     Now point your browser at <https:/localhost:8443/group/night-watch/>, ignore the unknown certificate warning, and log in with username gal and password gal. 
 
