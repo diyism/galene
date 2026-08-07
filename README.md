@@ -4,11 +4,17 @@
 
     放到arm64的路由器或树莓派或rock64之类的单板机上作为服务器运行非常合适:
     在一台有 Go 的 x86_64 电脑（或云服务器）上交叉编译:
-    git clone https://github.com/jech/galene.git
-    cd galene
-    CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags='-s -w' -o galene-arm64
-    scp galene-arm64 user@arm64_ip:/home/user/
-    ssh user@arm64_ip sudo install galene-arm64 /usr/bin/galene
+    $ git clone https://github.com/jech/galene.git
+    $ cd galene
+    $ CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags='-s -w' -o galene-arm64
+    $ scp galene-arm64 user@arm64_ip:/home/user/
+
+    在arm64单板机内:
+    $ sudo install galene-arm64 /usr/bin/galene
+    $ mkdir groups
+    $ echo '{"users": {"gal":{"password":"gal", "permissions":"op"}}}' > groups/night-watch.json
+    $ galene &
+    Now point your browser at <https:/localhost:8443/group/night-watch/>, ignore the unknown certificate warning, and log in with username gal and password gal. 
 
 
 # The Galene videoconferencing system
