@@ -8,7 +8,7 @@
     $ cd galene
     $ git tag | tail -10
     $ git checkout v1.1
-    $ go clean -modcache
+    $ go clean -cache
     $ CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags='-s -w' -o galene-arm64
     $ scp galene-arm64 user@arm64_ip:/home/user/
 
