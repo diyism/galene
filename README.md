@@ -6,6 +6,9 @@
     在一台有 Go 的 x86_64 电脑（或云服务器）上交叉编译:
     $ git clone https://github.com/jech/galene.git
     $ cd galene
+    $ git tag | tail -10
+    $ git checkout v1.1
+    $ go clean -modcache
     $ CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags='-s -w' -o galene-arm64
     $ scp galene-arm64 user@arm64_ip:/home/user/
 
