@@ -15,10 +15,11 @@
 
     在arm64单板机内:
     $ sudo install galene-arm64 /usr/bin/galene
+    $ git clone https://github.com/diyism/galene
     $ mkdir groups
     $ echo '{"public": true, "users": {"user1":{"password":"user1", "permissions":"op"}, "user2":{"password":"user2", "permissions":"op"}}}' > groups/room1.json
-    $ galene &
-    Now point your browser at <https:/localhost:8443/group/night-watch/>, ignore the unknown certificate warning, and log in with username gal and password gal. 
+    $ galene -static ./galene/static
+    Now point your browser at <https://tailscale-ip:8443/>, ignore the unknown certificate warning, and log in with username user1 and password user1.
 
 
 # The Galene videoconferencing system
