@@ -33,6 +33,10 @@
     测试把本地麦克风发送过去:
     $ parec --format=s16le --rate=48000 --channels=1 --latency-msec=20   | ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) aplay -q -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000'
 
+    直接测试远端播放:
+    sudo apt install pipewire-pulse
+    aplay /usr/share/sounds/alsa/Front_Left.wav
+
 # The Galene videoconferencing system
 
 Galene is a fully-featured videoconferencing system that is easy to deploy
