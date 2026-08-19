@@ -38,6 +38,8 @@
     $ parec --format=s16le --rate=48000 --channels=1 --latency-msec=20   | ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) aplay -q -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000'
     把本地麦克风发送过去(减少运行时间长了以后的延迟):
     $ parec --format=s16le --rate=48000 --channels=1 --latency-msec=5 | stdbuf -o0 cat | ssh -T -o Compression=no -o IPQoS=lowdelay malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) stdbuf -i0 -o0 aplay -q -f S16_LE -r 48000 -c 1 -t raw -B 8000 -F 2000'
+    或进一步加上 -c aes128-gcm@openssh.com简化加密算法:
+    $ parec --format=s16le --rate=48000 --channels=1 --latency-msec=5 | stdbuf -o0 cat | ssh -T -o Compression=no -o IPQoS=lowdelay -c aes128-gcm@openssh.com malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) stdbuf -i0 -o0 aplay -q -f S16_LE -r 48000 -c 1 -t raw -B 8000 -F 2000'
 
     直接测试远端播放:
     sudo apt install alsa-ucm-conf           #如果选择的output profile都有杂音时, 尝试升级
