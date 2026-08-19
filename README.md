@@ -22,8 +22,12 @@
     Now point your browser at <https://tailscale-ip:8443/>, ignore the unknown certificate warning,
     click "room1" and log in with username user1 and password user1.
 
-    获取默认输出:
-    $ pactl list short sinks; pactl get-default-sink
+    获取所有输出profiles(似乎出现3个时就有问题, 出现1个时是正常无杂音的):
+    $ pactl list short sinks
+    112     alsa_output.usb-CD002_CD002_CD002-01.analog-stereo      PipeWire        s16le 2ch 48000Hz       RUNNING
+    获取默认输出profile:
+    $ pactl get-default-sink
+    alsa_output.usb-CD002_CD002_CD002-01.analog-stereo
     获取默认输入:
     $ pactl list short sources; pactl get-default-source
 
@@ -34,7 +38,11 @@
     $ parec --format=s16le --rate=48000 --channels=1 --latency-msec=20   | ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) aplay -q -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000'
 
     直接测试远端播放:
+    sudo apt install alsa-ucm-conf           #如果选择的output profile都有杂音时, 尝试升级
     sudo apt install pipewire-pulse
+    sudo modprobe -r snd_usb_audio 2>/dev/null
+    sudo modprobe snd_usb_audio
+    systemctl --user -M malcolm@ restart pipewire pipewire-pulse wireplumber   #或者: sudo reboot
     aplay /usr/share/sounds/alsa/Front_Left.wav
 
 # The Galene videoconferencing system
