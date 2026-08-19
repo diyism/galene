@@ -22,6 +22,11 @@
     Now point your browser at <https://tailscale-ip:8443/>, ignore the unknown certificate warning,
     click "room1" and log in with username user1 and password user1.
 
+    获取默认输出:
+    $ pactl list short sinks; pactl get-default-sink
+    获取默认输入:
+    $ pactl list short sources; pactl get-default-source
+
     利用ssh连接目标机器更低缓冲来监测对比galene延迟情况:
     $ ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) parec -d "$(XDG_RUNTIME_DIR=/run/user/$(id -u) pactl get-default-source)" --format=s16le --rate=48000 --channels=1 --latency-msec=20' | aplay -q -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000
 
