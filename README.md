@@ -33,6 +33,8 @@
 
     利用ssh连接目标机器更低缓冲来监测对比galene延迟情况:
     $ ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) parec -d "$(XDG_RUNTIME_DIR=/run/user/$(id -u) pactl get-default-source)" --format=s16le --rate=48000 --channels=1 --latency-msec=20' | aplay -q -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000
+    指定output设备而不用默认的:
+    $ ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) parec -d "$(XDG_RUNTIME_DIR=/run/user/$(id -u) pactl get-default-source)" --format=s16le --rate=48000 --channels=1 --latency-msec=20' | PULSE_SINK="Audio Share Sink" aplay -q -D pulse -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000
 
     把本地麦克风发送过去:
     $ parec --format=s16le --rate=48000 --channels=1 --latency-msec=20   | ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) aplay -q -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000'
