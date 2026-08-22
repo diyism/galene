@@ -37,6 +37,8 @@
     $ ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) parec -d "$(XDG_RUNTIME_DIR=/run/user/$(id -u) pactl get-default-source)" --format=s16le --rate=48000 --channels=1 --latency-msec=20' | PULSE_SINK="Audio Share Sink" aplay -q -D pulse -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000
     在root下:
     $ ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/1000 parec -d "$(XDG_RUNTIME_DIR=/run/user/1000 pactl get-default-source)" --format=s16le --rate=48000 --channels=1 --latency-msec=20' | sudo -u malcolm XDG_RUNTIME_DIR=/run/user/1000 PULSE_SINK="Audio Share Sink" aplay -q -D pulse -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000
+    放/etc/rc.local里:
+    while true; do nohup ssh -T -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=5 -o ServerAliveCountMax=3 -o StrictHostKeyChecking=accept-new -o Compression=no malcolm@100.125.23.53  'XDG_RUNTIME_DIR=/run/user/1000 parec -d "$(XDG_RUNTIME_DIR=/run/user/1000 pactl get-default-source)" --format=s16le --rate=48000 --channels=1 --latency-msec=20' | sudo -u malcolm env XDG_RUNTIME_DIR=/run/user/1000 PULSE_SERVER=unix:/run/user/1000/pulse/native PULSE_SINK="Audio Share Sink" aplay -q -D pulse -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000 >/dev/null 2>&1;sleep 1;done &
 
     把本地麦克风发送过去:
     $ parec --format=s16le --rate=48000 --channels=1 --latency-msec=20   | ssh -T -o Compression=no malcolm@100.125.23.53 'XDG_RUNTIME_DIR=/run/user/$(id -u) aplay -q -f S16_LE -r 48000 -c 1 -t raw --buffer-time=30000 --period-time=10000'
